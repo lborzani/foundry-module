@@ -37,14 +37,14 @@ Hooks.on('renderActorSheet', async (app, html, data) => {
     }
 
     // Renderiza o template
-    const content = await renderTemplate('modules/foundry-module/templates/rune-tab.hbs', runeData);
+    const templatePath = 'modules/foundry-module/templates/rune-tab.hbs';
+    const renderer = foundry.applications?.handlebars?.renderTemplate || renderTemplate;
+    const content = await renderer(templatePath, runeData);
 
     // Injeta a aba na navegação
-    let tabs = html.find('.sheet-tabs');
-    if (tabs.length === 0) {
-        // Tenta outros seletores comuns
-        tabs = html.find('nav.tabs'); 
-    }
+    let tabs = html.find('.sheet-tabs'); // Padrão dnd5e antigo / genérico
+    if (tabs.length === 0) tabs = html.find('nav.sheet-navigation'); // PF2e
+    if (tabs.length === 0) tabs = html.find('nav.tabs'); // Outros
 
     if (tabs.length > 0) {
         // Adiciona o botão da aba

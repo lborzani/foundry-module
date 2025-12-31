@@ -1,4 +1,5 @@
 import { OverlayManager } from '../apps/OverlayManager.mjs';
+import '../styles/module.css';
 
 Hooks.once('init', () => {
     console.log('Foundry Module | Initializing module');

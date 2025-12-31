@@ -25,7 +25,7 @@ export default defineConfig({
       name: 'foundry-module',
       entry: 'scripts/module.mjs',
       formats: ['es'],
-      fileName: 'module'
+      fileName: (format) => 'scripts/module.mjs'
     },
     rollupOptions: {
       output: {

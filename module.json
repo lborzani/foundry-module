@@ -2,7 +2,7 @@
   "id": "foundry-module",
   "title": "Foundry UI Module",
   "description": "A module for Foundry that adds custom UI elements.",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "cascao",
   "compatibility": {
     "minimum": "12",

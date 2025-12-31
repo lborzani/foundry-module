@@ -1,0 +1,14 @@
+{
+  "name": "foundry-module",
+  "version": "1.0.0",
+  "description": "A module for Foundry that adds custom UI elements and functionalities.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "sass": "^1.0.0"
+  }
+}

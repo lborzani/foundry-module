@@ -1,0 +1,66 @@
+.foundry-module-overlay {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    width: 300px;
+    z-index: 99; /* Acima da maioria dos elementos, mas abaixo de janelas pop-up */
+    pointer-events: none; /* Permite clicar através da área transparente */
+}
+
+.foundry-module-overlay .hud-container {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--color-border-light-primary);
+    border-radius: 5px;
+    padding: 10px;
+    color: var(--color-text-light-primary);
+    pointer-events: all; /* Reativa cliques no conteúdo */
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    min-width: 200px;
+}
+
+.foundry-module-overlay .hud-header h3 {
+    margin: 0 0 10px 0;
+    border-bottom: 1px solid var(--color-border-light-primary);
+    font-family: var(--font-primary);
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.foundry-module-overlay .hidden {
+    display: none;
+}
+
+.foundry-module-overlay .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.foundry-module-overlay .stat-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px;
+    border-radius: 4px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.foundry-module-overlay .stat-box .label {
+    font-size: 0.8em;
+    color: #aaa;
+    text-transform: uppercase;
+}
+
+.foundry-module-overlay .stat-box .value {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#hud-actor-name {
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+    color: var(--color-text-light-highlight);
+}

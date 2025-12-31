@@ -1,0 +1,44 @@
+{
+  "id": "foundry-module",
+  "title": "Foundry UI Module",
+  "description": "A module for Foundry that adds custom UI elements.",
+  "version": "1.0.0",
+  "author": "cascao",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12"
+  },
+  "esmodules": [
+    "scripts/module.mjs"
+  ],
+  "styles": [
+    "styles/module.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
+    }
+  ],
+  "packs": [
+    {
+      "name": "my-pack",
+      "label": "My Pack",
+      "path": "packs/my-pack.db",
+      "type": "Adventure"
+    }
+  ],
+  "templates": [
+    {
+      "name": "overlay",
+      "path": "templates/overlay.hbs"
+    }
+  ],
+  "url": "https://github.com/lborzani/foundry-module",
+  "manifest": "https://github.com/lborzani/foundry-module/releases/latest/download/module.json",
+  "download": "https://github.com/lborzani/foundry-module/releases/download/v1.0.0/module.zip",
+  "readme": "https://github.com/lborzani/foundry-module/blob/main/README.md",
+  "bugs": "https://github.com/lborzani/foundry-module/issues",
+  "license": "MIT"
+}

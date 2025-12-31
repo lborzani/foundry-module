@@ -1,0 +1,40 @@
+# my-pack.db
+
+{
+  "items": [
+    {
+      "id": "item1",
+      "name": "Sword of Destiny",
+      "type": "weapon",
+      "damage": "1d8",
+      "description": "A legendary sword that grants its wielder great power."
+    },
+    {
+      "id": "item2",
+      "name": "Healing Potion",
+      "type": "potion",
+      "effect": "Restores 2d4 hit points",
+      "description": "A potion that heals wounds and restores vitality."
+    }
+  ],
+  "characters": [
+    {
+      "id": "char1",
+      "name": "Aragorn",
+      "class": "Ranger",
+      "level": 5,
+      "description": "A skilled ranger with a strong sense of justice."
+    },
+    {
+      "id": "char2",
+      "name": "Gandalf",
+      "class": "Wizard",
+      "level": 10,
+      "description": "A wise wizard with powerful magic."
+    }
+  ],
+  "settings": {
+    "defaultItemRarity": "common",
+    "enableAdvancedFeatures": true
+  }
+}

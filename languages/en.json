@@ -1,0 +1,33 @@
+{
+  "module": {
+    "name": "Foundry Module",
+    "description": "A module for enhancing the Foundry interface with additional UI elements.",
+    "version": "1.0.0",
+    "author": "crlngn",
+    "dependencies": {
+      "foundry": ">=0.8.0"
+    }
+  },
+  "ui": {
+    "button": {
+      "label": "Click Me",
+      "tooltip": "This button does something important."
+    },
+    "form": {
+      "submit": {
+        "label": "Submit",
+        "successMessage": "Your data has been submitted successfully!",
+        "errorMessage": "There was an error submitting your data."
+      }
+    },
+    "modal": {
+      "title": "Important Information",
+      "content": "Please read the following information carefully."
+    }
+  },
+  "notifications": {
+    "info": "This is an informational message.",
+    "warning": "This is a warning message.",
+    "error": "This is an error message."
+  }
+}

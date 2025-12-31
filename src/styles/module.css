@@ -19,12 +19,45 @@
     min-width: 200px;
 }
 
-.foundry-module-overlay .hud-header h3 {
+.foundry-module-overlay .hud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 0 0 10px 0;
     border-bottom: 1px solid var(--color-border-light-primary);
+    padding-bottom: 5px;
+    cursor: grab;
+}
+
+.foundry-module-overlay .hud-header.locked {
+    cursor: default;
+}
+
+.foundry-module-overlay .hud-header:active {
+    cursor: grabbing;
+}
+
+.foundry-module-overlay .hud-header h3 {
+    margin: 0;
     font-family: var(--font-primary);
     font-size: 1.2em;
+    flex-grow: 1;
     text-align: center;
+    pointer-events: none; /* Evita interferir no drag */
+}
+
+.foundry-module-overlay .hud-lock {
+    color: var(--color-text-light-primary);
+    cursor: pointer;
+    font-size: 0.9em;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    z-index: 10; /* Garante que o clique funcione */
+}
+
+.foundry-module-overlay .hud-lock:hover {
+    opacity: 1;
+    text-shadow: 0 0 5px var(--color-shadow-primary);
 }
 
 .foundry-module-overlay .hidden {

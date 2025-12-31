@@ -9,6 +9,21 @@ export class OverlayManager {
      */
     init() {
         console.log("Foundry Module | Initializing OverlayManager");
+
+        // Registra configurações
+        game.settings.register("foundry-module", "overlayPosition", {
+            scope: "client",
+            config: false,
+            type: Object,
+            default: { top: 100, left: 100 }
+        });
+
+        game.settings.register("foundry-module", "overlayLocked", {
+            scope: "client",
+            config: false,
+            type: Boolean,
+            default: false
+        });
         
         // Usamos o hook 'ready' para garantir que o jogo esteja totalmente carregado
         Hooks.once('ready', this._onReady.bind(this));
@@ -105,12 +120,87 @@ export class OverlayManager {
             // Cria o elemento jQuery
             this.element = $(htmlContent);
             
+            // Aplica posição salva
+            const pos = game.settings.get("foundry-module", "overlayPosition");
+            this.element.css({ top: pos.top, left: pos.left, right: 'auto' }); // Remove right default
+
+            // Aplica estado de lock inicial
+            const locked = game.settings.get("foundry-module", "overlayLocked");
+            this._updateLockState(locked);
+
             // Injeta no body do documento
             $('body').append(this.element);
             
+            // Ativa listeners
+            this._activateListeners();
+
             console.log("Foundry Module | Overlay injected");
         } catch (err) {
             console.error("Foundry Module | Failed to render overlay:", err);
+        }
+    }
+
+    _activateListeners() {
+        const header = this.element.find('.hud-header');
+        const lockBtn = this.element.find('.hud-lock');
+        
+        // Toggle Lock
+        lockBtn.click(async (ev) => {
+            ev.preventDefault();
+            const isLocked = game.settings.get("foundry-module", "overlayLocked");
+            await game.settings.set("foundry-module", "overlayLocked", !isLocked);
+            this._updateLockState(!isLocked);
+        });
+
+        // Dragging Logic
+        let isDragging = false;
+        let offset = { x: 0, y: 0 };
+
+        header.mousedown((ev) => {
+            if (game.settings.get("foundry-module", "overlayLocked")) return;
+            if (ev.target.closest('.hud-lock')) return; // Ignora clique no cadeado
+
+            isDragging = true;
+            const rect = this.element[0].getBoundingClientRect();
+            offset.x = ev.clientX - rect.left;
+            offset.y = ev.clientY - rect.top;
+            
+            this.element.addClass('dragging');
+        });
+
+        $(document).mousemove((ev) => {
+            if (!isDragging) return;
+            
+            const top = ev.clientY - offset.y;
+            const left = ev.clientX - offset.x;
+            
+            this.element.css({ top, left });
+        });
+
+        $(document).mouseup(async (ev) => {
+            if (!isDragging) return;
+            isDragging = false;
+            this.element.removeClass('dragging');
+            
+            // Salva nova posição
+            const rect = this.element[0].getBoundingClientRect();
+            await game.settings.set("foundry-module", "overlayPosition", {
+                top: rect.top,
+                left: rect.left
+            });
+        });
+    }
+
+    _updateLockState(locked) {
+        const icon = this.element.find('.hud-lock i');
+        const header = this.element.find('.hud-header');
+
+        if (locked) {
+            icon.removeClass('fa-lock-open').addClass('fa-lock');
+            header.addClass('locked');
+        } else {
+            icon.removeClass('fa-lock').addClass('fa-lock-open');
+            header.removeClass('locked');
         }
     }
 }

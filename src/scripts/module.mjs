@@ -1,6 +1,9 @@
 import { RuneManager } from './RuneManager.mjs';
 import { RUNES } from './constants.mjs';
+import { RuneHud } from '../apps/RuneHud.mjs';
 import '../styles/module.css';
+
+let runeHud;
 
 Hooks.once('init', async () => {
     console.log('Foundry Module | Initializing module');
@@ -11,7 +14,32 @@ Hooks.once('init', async () => {
     };
 
     // Preload templates
-    loadTemplates(['modules/foundry-module/templates/rune-tab.hbs']);
+    loadTemplates([
+        'modules/foundry-module/templates/rune-tab.hbs',
+        'modules/foundry-module/templates/rune-hud.hbs'
+    ]);
+});
+
+Hooks.once('ready', async () => {
+    runeHud = new RuneHud();
+    runeHud.render(true);
+});
+
+Hooks.on('controlToken', () => {
+    if (runeHud) runeHud.render();
+});
+
+Hooks.on('updateActor', (actor) => {
+    // Atualiza se o ator modificado for o selecionado ou o personagem do usuário
+    const controlledActor = canvas.tokens.controlled[0]?.actor;
+    const userCharacter = game.user.character;
+    
+    if (runeHud && (
+        (controlledActor && actor.id === controlledActor.id) || 
+        (userCharacter && actor.id === userCharacter.id)
+    )) {
+        runeHud.render();
+    }
 });
 
 Hooks.on('renderActorSheet', async (app, html, data) => {

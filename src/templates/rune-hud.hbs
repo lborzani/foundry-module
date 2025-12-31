@@ -1,0 +1,18 @@
+<div>
+    <div class="hud-container">
+        <div class="hud-header">
+            <a class="hud-lock"><i class="fas fa-lock-open"></i></a>
+            <h3>Runas</h3>
+        </div>
+        <div class="hud-content">
+            {{#if hasActor}}
+            <div class="ether-display">
+                <span class="ether-label">Éter:</span>
+                <span class="ether-value">{{ether}}</span>
+            </div>
+            {{else}}
+            <div class="no-actor">Selecione um token</div>
+            {{/if}}
+        </div>
+    </div>
+</div>

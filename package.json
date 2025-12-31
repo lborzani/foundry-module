@@ -1,6 +1,6 @@
 {
   "name": "foundry-module",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A module for Foundry that adds custom UI elements and functionalities.",
   "scripts": {
     "dev": "vite",

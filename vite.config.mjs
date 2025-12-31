@@ -29,7 +29,10 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
-        assetFileNames: "styles/[name].[ext]",
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'style.css') return 'styles/module.css';
+          return 'styles/[name].[ext]';
+        },
       },
       plugins: [
         copy({

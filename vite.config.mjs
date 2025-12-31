@@ -34,10 +34,10 @@ export default defineConfig({
       plugins: [
         copy({
           targets: [
-            { src: '../module.json', dest: 'dist' },
-            { src: '../languages', dest: 'dist' },
-            { src: '../packs', dest: 'dist' },
-            { src: 'templates', dest: 'dist' }
+            { src: 'module.json', dest: 'dist' },
+            { src: 'languages', dest: 'dist' },
+            { src: 'packs', dest: 'dist' },
+            { src: 'src/templates', dest: 'dist' }
           ],
           hook: 'writeBundle'
         })

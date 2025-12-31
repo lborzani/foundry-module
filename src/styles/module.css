@@ -91,9 +91,165 @@
     font-weight: bold;
 }
 
+/* Rune System Styles */
+.foundry-module-overlay .rune-system {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.foundry-module-overlay .ether-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8em;
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+.foundry-module-overlay .ether-bar-container {
+    height: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #444;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.foundry-module-overlay .ether-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00bfff, #ff00ff); /* Cyberpunk gradient */
+    width: 0%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* Overload State */
+.foundry-module-overlay .ether-bar-fill.overload {
+    background: #ff0000;
+    box-shadow: 0 0 10px #ff0000;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.foundry-module-overlay .purge-btn {
+    width: 100%;
+    background: rgba(0, 191, 255, 0.2);
+    border: 1px solid #00bfff;
+    color: #00bfff;
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.2s;
+}
+
+.foundry-module-overlay .purge-btn:hover {
+    background: rgba(0, 191, 255, 0.4);
+    box-shadow: 0 0 5px #00bfff;
+}
+
 #hud-actor-name {
     margin: 0;
     text-align: center;
     font-weight: bold;
     color: var(--color-text-light-highlight);
+}
+
+/* Rune Tab Styles */
+.rune-tab {
+    padding: 10px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.rune-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--color-border-light-primary);
+    padding-bottom: 5px;
+}
+
+.rune-header h3 {
+    margin: 0;
+    border: none;
+}
+
+.rune-header .ether-display {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rune-header .ether-display input {
+    width: 50px;
+    text-align: center;
+}
+
+.rune-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.rune-category h4 {
+    border-bottom: 1px solid var(--color-border-light-tertiary);
+    margin-bottom: 10px;
+    color: var(--color-text-dark-primary);
+}
+
+.rune-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+.rune-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.05);
+    transition: all 0.2s;
+    opacity: 0.6;
+    filter: grayscale(100%);
+}
+
+.rune-item.known {
+    opacity: 1;
+    filter: grayscale(0%);
+    background: rgba(0, 0, 0, 0.1);
+    border-color: var(--color-border-dark-primary);
+}
+
+.rune-item img {
+    border: none;
+    margin-bottom: 5px;
+}
+
+.rune-item .rune-name {
+    font-size: 0.9em;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.rune-item .rune-control {
+    color: var(--color-text-light-inactive);
+    cursor: pointer;
+}
+
+.rune-item.known .rune-control {
+    color: var(--color-text-success);
+}
+
+.rune-item:hover {
+    background: rgba(0, 0, 0, 0.15);
 }

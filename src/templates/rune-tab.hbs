@@ -1,0 +1,26 @@
+<div class="tab rune-tab" data-group="primary" data-tab="runes">
+    <div class="rune-header">
+        <h3>Gerenciador de Runas</h3>
+        <div class="ether-display">
+            <label>Éter:</label>
+            <input type="number" name="flags.foundry-module.ether" value="{{ether}}" min="0">
+        </div>
+    </div>
+
+    <div class="rune-categories">
+        {{#each runes as |category key|}}
+        <div class="rune-category {{key}}">
+            <h4>{{category.label}}</h4>
+            <div class="rune-grid">
+                {{#each category.items as |rune|}}
+                <div class="rune-item {{#if rune.known}}known{{/if}}" data-rune-id="{{rune.id}}" data-category="{{key}}">
+                    <img src="{{rune.icon}}" title="{{rune.name}}" width="36" height="36"/>
+                    <span class="rune-name">{{rune.name}}</span>
+                    <a class="rune-control" data-action="toggle-rune"><i class="fas {{#if rune.known}}fa-check-circle{{else}}fa-circle{{/if}}"></i></a>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

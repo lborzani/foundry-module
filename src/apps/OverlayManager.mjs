@@ -1,7 +1,10 @@
+import { RuneManager } from '../scripts/RuneManager.mjs';
+
 export class OverlayManager {
     constructor() {
         this.element = null;
         this.template = "modules/foundry-module/templates/overlay.hbs";
+        this.currentActor = null;
     }
 
     /**
@@ -35,10 +38,18 @@ export class OverlayManager {
         // Registra hooks para atualizações
         Hooks.on('controlToken', this._onControlToken.bind(this));
         Hooks.on('updateActor', this._onUpdateActor.bind(this));
+        Hooks.on('updateRuneMaker', this._onUpdateRuneMaker.bind(this));
         
         // Verifica se já existe um token selecionado
         if (canvas.tokens?.controlled.length > 0) {
             this.updateContent(canvas.tokens.controlled[0].actor);
+        }
+    }
+
+    _onUpdateRuneMaker(actor) {
+        // Se o ator atualizado for o que estamos vendo, atualiza a UI
+        if (this.currentActor && this.currentActor.id === actor.id) {
+            this.updateContent(actor);
         }
     }
 
@@ -76,10 +87,17 @@ export class OverlayManager {
      */
     updateContent(actor) {
         if (!this.element || !actor) return;
+        
+        this.currentActor = actor;
 
         const name = actor.name;
         const hp = actor.system.attributes?.hp;
         const ac = actor.system.attributes?.ac;
+
+        // Dados do Rune Maker
+        const ether = RuneManager.getEther(actor);
+        const maxEther = RuneManager.getECMax(actor);
+        const etherPercent = maxEther > 0 ? Math.min(100, (ether / maxEther) * 100) : 0;
 
         // Atualiza textos
         this.element.find('#hud-actor-name').text(name);
@@ -92,6 +110,18 @@ export class OverlayManager {
             this.element.find('#hud-actor-ac').text(ac.value || 0);
         }
 
+        // Atualiza Ether Bar
+        this.element.find('#hud-ether-text').text(`${ether} / ${maxEther}`);
+        const bar = this.element.find('#hud-ether-bar');
+        bar.css('width', `${etherPercent}%`);
+        
+        // Visual de Sobrecarga
+        if (ether > maxEther) {
+            bar.addClass('overload');
+        } else {
+            bar.removeClass('overload');
+        }
+
         // Alterna visibilidade
         this.element.find('#hud-no-selection').addClass('hidden');
         this.element.find('#hud-actor-info').removeClass('hidden');
@@ -102,6 +132,7 @@ export class OverlayManager {
      */
     clearContent() {
         if (!this.element) return;
+        this.currentActor = null;
         
         this.element.find('#hud-no-selection').removeClass('hidden');
         this.element.find('#hud-actor-info').addClass('hidden');
@@ -143,7 +174,16 @@ export class OverlayManager {
     _activateListeners() {
         const header = this.element.find('.hud-header');
         const lockBtn = this.element.find('.hud-lock');
+        const purgeBtn = this.element.find('#hud-btn-purge');
         
+        // Purge Button
+        purgeBtn.click(async (ev) => {
+            ev.preventDefault();
+            if (this.currentActor) {
+                await RuneManager.purgeCache(this.currentActor);
+            }
+        });
+
         // Toggle Lock
         lockBtn.click(async (ev) => {
             ev.preventDefault();

@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import path from 'path';
+import copy from 'rollup-plugin-copy';
 
 export default defineConfig({
   root: 'src',
@@ -30,6 +31,17 @@ export default defineConfig({
       output: {
         assetFileNames: "styles/[name].[ext]",
       },
+      plugins: [
+        copy({
+          targets: [
+            { src: '../module.json', dest: 'dist' },
+            { src: '../languages', dest: 'dist' },
+            { src: '../packs', dest: 'dist' },
+            { src: 'templates', dest: 'dist' }
+          ],
+          hook: 'writeBundle'
+        })
+      ]
     },
   },
 });

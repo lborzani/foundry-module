@@ -40,7 +40,12 @@ Hooks.on('renderActorSheet', async (app, html, data) => {
     const content = await renderTemplate('modules/foundry-module/templates/rune-tab.hbs', runeData);
 
     // Injeta a aba na navegação
-    const tabs = html.find('.sheet-tabs');
+    let tabs = html.find('.sheet-tabs');
+    if (tabs.length === 0) {
+        // Tenta outros seletores comuns
+        tabs = html.find('nav.tabs'); 
+    }
+
     if (tabs.length > 0) {
         // Adiciona o botão da aba
         const tabBtn = $(`<a class="item" data-tab="runes">Runas</a>`);
@@ -54,6 +59,8 @@ Hooks.on('renderActorSheet', async (app, html, data) => {
         if (app._tabs && app._tabs.length > 0) {
             app._tabs[0].bind(html[0]);
         }
+    } else {
+        console.warn('Foundry Module | Could not find sheet tabs to inject Rune tab.');
     }
 
     // Listeners da aba de runas
